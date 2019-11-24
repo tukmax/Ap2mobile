@@ -6,6 +6,7 @@ import androidx.room.Entity;
 public class CidadeModel {
     private int cod;
     private String name;
+    private Main main;
 
     public int getCod() {
         return cod;
@@ -23,11 +24,16 @@ public class CidadeModel {
         this.name = name;
     }
 
+    public Main getMain() { return main; }
+
+    public void setMain(Main main) { this.main = main; }
+
     @Override
     public String toString() {
         return "CidadeModel{" +
                 "cod=" + cod +
                 ", name='" + name + '\'' +
+                ", main=" + main +
                 '}';
     }
 }
