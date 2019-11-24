@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.example.weather.models.CidadeModel;
 import com.example.weather.retrofit.WeatherService;
 
-import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         WeatherService wservice = retrofit.create(WeatherService.class);
 
-        System.out.println("------------------------------------------------------------------------------------------------");
-        //esse comando deveria funcionar mais nao sei pq ele nao altera o texto dentro do app
+
+        //Chamada do retrofit para retornar os objetos
         Call<CidadeModel> call = wservice.getCidadePeloNome("recife", "afeb3f38cdff7769f0f18c09357e5750","metric");
         call.enqueue(new Callback<CidadeModel>() {
             @Override
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Erro");
             }
         });
-        System.out.println("------------------------------------------------------------------------------------------------");
+
 
 
 
