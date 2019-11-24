@@ -30,7 +30,7 @@ public class ConexaoSQLite extends SQLiteOpenHelper {
                 "cod INTEGER PRIMARY KEY," +
                         "nome TEXT)";
 
-        SQLiteDatabase.openOrCreateDatabase(sqlTabelaCidades,null);
+        db.execSQL(sqlTabelaCidades);
     }
 
     @Override

@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.weather.DBHelper.ConexaoSQLite;
+import com.example.weather.controller.CidadeCtrl;
 import com.example.weather.models.CidadeModel;
 import com.example.weather.retrofit.WeatherService;
 
@@ -29,6 +31,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Teste banco de dados
+        ConexaoSQLite conexaoSQLite = ConexaoSQLite.getInstancia(this);
+        CidadeModel cidade = new CidadeModel();
+        cidade.setName("London");
+        cidade.setCod(200);
+
+        CidadeCtrl ctrl = new CidadeCtrl(conexaoSQLite);
+        long resultado = ctrl.salvarCidadeCtrl(cidade);
+
+        System.out.println("Banco funcionou = " + resultado);
 
         this.btnCadastrarCidade = (ImageButton) findViewById(R.id.btnAddCity);
 
