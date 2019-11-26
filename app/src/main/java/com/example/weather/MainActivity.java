@@ -1,5 +1,6 @@
 package com.example.weather;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -44,11 +45,13 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<CidadeModel> call, Response<CidadeModel> response) {
                 CidadeModel city = response.body();
                 texto.setText(city.toString());
+
+
             }
 
             @Override
             public void onFailure(Call<CidadeModel> call, Throwable t) {
-                System.out.println("Erro");
+                texto.setText("Algo de erraddo ocorreu desculpe");
             }
         });
 

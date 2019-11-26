@@ -25,7 +25,7 @@ public class Main {
 
     @Override
     public String toString() {
-        return "Main{" +
+        return "{" +
                 "temp=" + temp +
                 ", temp_min=" + temp_min +
                 ", temp_max=" + temp_max +
