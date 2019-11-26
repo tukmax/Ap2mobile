@@ -2,43 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".CadastroCidadeActivity">
 
-
-
+    <ImageButton
+        android:id="@+id/btnVoltarHome"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        app:srcCompat="?attr/homeAsUpIndicator"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="17dp" />
     <androidx.legacy.widget.Space
         android:layout_width="match_parent"
         android:layout_height="50dp"
         ></androidx.legacy.widget.Space>
+
     <EditText
-        android:id="@+id/editTextDebug"
+        android:id="@+id/editTextCidade"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="City Name"
         android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="110dp"
-
-        />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="83dp" />
 
     <androidx.legacy.widget.Space
         android:layout_width="match_parent"
-        android:layout_height="570dp"
+        android:layout_height="20dp"
     ></androidx.legacy.widget.Space>
 
-    <ImageButton
-        android:id="@+id/btnAddCity"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnSalvarCidade"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/btn_star"
-        tools:layout_editor_absoluteX="339dp"
-        tools:layout_editor_absoluteY="664dp"
-        android:baselineAlignBottom="true"
+        android:text="Save"
+        tools:layout_editor_absoluteX="166dp"
+        tools:layout_editor_absoluteY="205dp" />
 
-        />
 
 </LinearLayout>
