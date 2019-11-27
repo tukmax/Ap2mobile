@@ -30,7 +30,7 @@ public class CidadeModel {
 
     @Override
     public String toString() {
-        return "CidadeModel{" +
+        return "{" +
                 "cod=" + cod +
                 ", name='" + name + '\'' +
                 ", main=" + main +

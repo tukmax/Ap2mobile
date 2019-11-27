@@ -1,8 +1,11 @@
 package com.example.weather;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.weather.models.CidadeModel;
@@ -38,17 +41,25 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Chamada do retrofit para retornar os objetos
-        Call<CidadeModel> call = wservice.getCidadePeloNome("recife", "afeb3f38cdff7769f0f18c09357e5750","metric");
+        Call<CidadeModel> call = wservice.getCidadePeloNome("sdfsdf", "afeb3f38cdff7769f0f18c09357e5750","metric");
         call.enqueue(new Callback<CidadeModel>() {
             @Override
             public void onResponse(Call<CidadeModel> call, Response<CidadeModel> response) {
                 CidadeModel city = response.body();
-                texto.setText(city.toString());
+                if(city != null){
+
+                    texto.setText(city.toString());
+                }else{
+                    texto.setText("Cidade não encontrada.");
+                }
+
+
             }
 
             @Override
             public void onFailure(Call<CidadeModel> call, Throwable t) {
-                System.out.println("Erro");
+                Log.d("erro", "deu erro");
+                //texto.setText("Algo de erraddo ocorreu desculpe");
             }
         });
 
