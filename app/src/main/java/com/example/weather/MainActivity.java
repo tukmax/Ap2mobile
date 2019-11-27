@@ -1,10 +1,9 @@
 package com.example.weather;
 
-<<<<<<< HEAD
 
-=======
+
 import androidx.annotation.NonNull;
->>>>>>> ca9dcf7b63ada5a741ec8547fee2c1bab01da486
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
+
         //Teste banco de dados
         ConexaoSQLite conexaoSQLite = ConexaoSQLite.getInstancia(this);
         CidadeModel cidade = new CidadeModel();
@@ -47,9 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("Banco funcionou = " + resultado);
 
-        this.btnCadastrarCidade = (ImageButton) findViewById(R.id.btnAddCity);
-=======
->>>>>>> parent of 2490bf2... Layout Basico e nova activity
+        // Vai pra outra activity this.btnCadastrarCidade = (ImageButton) findViewById(R.id.btnAddCity);
+
 
         this.texto = findViewById(R.id.texto);
         //Retrofit
@@ -67,28 +65,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<CidadeModel> call, Response<CidadeModel> response) {
                 CidadeModel city = response.body();
-<<<<<<< HEAD
+
                 if(city != null){
 
                     texto.setText(city.toString());
                 }else{
                     texto.setText("Cidade não encontrada.");
                 }
-=======
+
                 texto.setText(city.toString());
->>>>>>> ca9dcf7b63ada5a741ec8547fee2c1bab01da486
+
 
 
             }
 
             @Override
             public void onFailure(Call<CidadeModel> call, Throwable t) {
-<<<<<<< HEAD
                 Log.d("erro", "deu erro");
                 //texto.setText("Algo de erraddo ocorreu desculpe");
-=======
                 texto.setText("Algo de erraddo ocorreu desculpe");
->>>>>>> ca9dcf7b63ada5a741ec8547fee2c1bab01da486
             }
         });
 
