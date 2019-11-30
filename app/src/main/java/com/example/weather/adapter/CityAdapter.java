@@ -27,7 +27,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CitiesViewHold
     @NonNull
     @Override
     public CitiesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.adapter_contatos, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.adapter_cities, parent, false);
         CitiesViewHolder viewHolder = new CitiesViewHolder(view);
         return viewHolder;
     }
@@ -35,8 +35,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CitiesViewHold
     @Override
     public void onBindViewHolder(@NonNull CitiesViewHolder holder, int position) {
         CityModel city = cities.get(position);
-        holder.textViewContatoNome.setText(city.getNome());//atualizar esse campo adaptar para o nosso contexto
-        holder.textViewContatoTelefone.setText(city.getTelefone());//atualizar esse campo adaptar para o nosso contexto
+        holder.textViewCityNome.setText(city.getName());//atualizar esse campo adaptar para o nosso contexto
+        holder.textViewCityTemp.setText(city.getMain().getTemp().toString());//atualizar esse campo adaptar para o nosso contexto
     }
 
 
@@ -46,13 +46,13 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CitiesViewHold
     }
 
     public static class CitiesViewHolder extends RecyclerView.ViewHolder {
-            TextView textViewContatoNome;
-            TextView textViewContatoTelefone;
+            TextView textViewCityNome;
+            TextView textViewCityTemp;
 
             public CitiesViewHolder(View view){
                 super(view);
-                textViewContatoNome = (TextView) view.findViewById(R.id.contato_nome);
-                textViewContatoTelefone = (TextView) view.findViewById(R.id.contato_telefone);
+                textViewCityNome = (TextView) view.findViewById(R.id.city_nome);
+                textViewCityTemp = (TextView) view.findViewById(R.id.city_temp);
             }
 
     }

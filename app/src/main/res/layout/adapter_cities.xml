@@ -8,7 +8,7 @@
     >
 
     <TextView
-        android:id="@+id/contato_nome"
+        android:id="@+id/city_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="City"
@@ -16,7 +16,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/contato_telefone"
+        android:id="@+id/city_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Temp: "
