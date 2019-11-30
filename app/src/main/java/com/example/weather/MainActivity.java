@@ -2,8 +2,6 @@ package com.example.weather;
 
 
 
-import androidx.annotation.NonNull;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -11,11 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.weather.DBHelper.ConexaoSQLite;
-import com.example.weather.controller.CidadeCtrl;
-import com.example.weather.models.CidadeModel;
+import com.example.weather.DBHelper.DBHelper;
+import com.example.weather.models.CityModel;
 import com.example.weather.retrofit.WeatherService;
 
+
+import java.util.Iterator;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,22 +34,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        //Teste banco de dados
-        ConexaoSQLite conexaoSQLite = ConexaoSQLite.getInstancia(this);
-        CidadeModel cidade = new CidadeModel();
-        cidade.setName("London");
-        cidade.setCod(200);
-
-        CidadeCtrl ctrl = new CidadeCtrl(conexaoSQLite);
-        long resultado = ctrl.salvarCidadeCtrl(cidade);
-
-        System.out.println("Banco funcionou = " + resultado);
-
-        // Vai pra outra activity this.btnCadastrarCidade = (ImageButton) findViewById(R.id.btnAddCity);
-
-
         this.texto = findViewById(R.id.texto);
+
+        //inicio do teste do database e esta funcionando
+
+        DBHelper dbh = new DBHelper(this); //chamando o dbhelper pra auxiliar na manipulacao do bd
+
+        CityModel city = new CityModel("Recife"); //criando uma cidade
+        CityModel city2 = new CityModel("Natal"); //criando uma cidade
+
+        dbh.insertCity(city);// adicionando no banco
+        dbh.insertCity(city2);// adicionando no banco
+
+
+        // proximos estao criando uma lista e mostrando-as no log do logcat
+        List<CityModel> lscity = dbh.cityAll(); // Retorna uma lista com todas as cidades cadastradas no banco
+        for(Iterator iterator = lscity.iterator(); iterator.hasNext();){
+            CityModel cidade = (CityModel) iterator.next();
+            Log.i("myapp db", cidade.toString()); // mostra apenas no log do navcat
+
+        }
+
+
+
         //Retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.openweathermap.org/data/2.5/")
@@ -60,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Chamada do retrofit para retornar os objetos
-        Call<CidadeModel> call = wservice.getCidadePeloNome("sdfsdf", "afeb3f38cdff7769f0f18c09357e5750","metric");
-        call.enqueue(new Callback<CidadeModel>() {
+        Call<CityModel> call = wservice.getCidadePeloNome("sdfsdf", "afeb3f38cdff7769f0f18c09357e5750","metric");
+        call.enqueue(new Callback<CityModel>() {
             @Override
-            public void onResponse(Call<CidadeModel> call, Response<CidadeModel> response) {
-                CidadeModel city = response.body();
+            public void onResponse(Call<CityModel> call, Response<CityModel> response) {
+                CityModel city = response.body();
 
                 if(city != null){
 
@@ -73,14 +80,11 @@ public class MainActivity extends AppCompatActivity {
                     texto.setText("Cidade não encontrada.");
                 }
 
-                texto.setText(city.toString());
-
-
 
             }
 
             @Override
-            public void onFailure(Call<CidadeModel> call, Throwable t) {
+            public void onFailure(Call<CityModel> call, Throwable t) {
                 Log.d("erro", "deu erro");
                 //texto.setText("Algo de erraddo ocorreu desculpe");
                 texto.setText("Algo de erraddo ocorreu desculpe");
