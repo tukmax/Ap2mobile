@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
     <Space
@@ -24,14 +25,27 @@
         android:id="@+id/my_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_dark"
+        android:textColor="@android:color/white"
         android:text="@string/add_city"
         />
 
     <Space
         android:layout_width="wrap_content"
+        android:layout_height="4dp"
+        />
+    <Button
+        android:id="@+id/btnRemoveCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_dark"
+        android:textColor="@android:color/white"
+        android:text="Remove city"
+    />
+    <Space
+        android:layout_width="wrap_content"
         android:layout_height="10dp"
         />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"

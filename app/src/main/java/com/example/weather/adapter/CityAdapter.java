@@ -56,4 +56,15 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CitiesViewHold
             }
 
     }
+
+    public void clear() {
+        int size = cities.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                cities.remove(0);
+            }
+
+            notifyItemRangeRemoved(0, size);
+        }
+    }
 }

@@ -43,6 +43,18 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void removeCity(CityModel city){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("city","city_nome"+"=?",new String[]{city.getName()});
+        db.close();
+    }
+
+    public void removeAllCities(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("city",null,null);
+        db.close();
+    }
+
     public List<CityModel> cityAll(){
         List<CityModel> listcity = new ArrayList<CityModel>();
         SQLiteDatabase db = getReadableDatabase();

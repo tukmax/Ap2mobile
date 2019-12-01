@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText my_edittext;
     private Button my_button;
+    private Button btnRemoveCity;
 
     private RecyclerView recyclerView;
     private CityAdapter cityAdapter;
@@ -50,15 +51,33 @@ public class MainActivity extends AppCompatActivity {
         //linkando o botao e o edittext
         my_edittext = (EditText) findViewById(R.id.my_edittext);
         my_button = (Button) findViewById(R.id.my_button);
+        btnRemoveCity = (Button) findViewById(R.id.btnRemoveCity);
 
+        //Botão para add cidades
         my_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String nome = my_edittext.getText().toString();
+                    String nome = my_edittext.getText().toString();
                     CityModel city = new CityModel(nome);
                     add_city(city);
-                    att();// so pra mostar no logcat ta funcionando o botao tbm tem que fazer
+                    cityAdapter.clear();
+                    att();// atualiza o recycleview
+
+
+            }
+        });
+
+        //Botão remover cidades
+        btnRemoveCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String nome = my_edittext.getText().toString();
+                CityModel city = new CityModel(nome);
+                rmv_city(city);
+                cityAdapter.clear();
+                att();// atualiza o recycleview
 
 
             }
@@ -79,24 +98,65 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-        //banco de dados exempli
+        //popular banco de dados com 5 cidades
+        /*
         DBHelper dbh = new DBHelper(this);
         CityModel city = new CityModel("Recife"); //criando uma cidade
         CityModel city2 = new CityModel("Natal"); //criando uma cidade
-        dbh.insertCity(city);// adicionando no banco
-        dbh.insertCity(city2);// adicionando no banco
+        CityModel city3 = new CityModel("Caruaru"); //criando uma cidade
+        CityModel city4 = new CityModel("Caracas"); //criando uma cidade
+        CityModel city5 = new CityModel("Brasilia"); //criando uma cidade
+        add_city(city);
+        add_city(city2);
+        add_city(city3);
+        add_city(city4);
+        add_city(city5);
+        */
 
-        // proximos estao criando uma lista e mostrando-as no log do logcat
-        List<CityModel> lscity = dbh.cityAll(); // Retorna uma lista com todas as cidades cadastradas no banco
-        for(Iterator iterator = lscity.iterator(); iterator.hasNext();){
-            CityModel cidade = (CityModel) iterator.next();
-            Log.i("myapp db", cidade.toString()); // mostra apenas no log do navcat
-
-        }
-        // fim do exemplo olha no logcat e filtra por CityModel
+        //Método para remover todas as cidades cadastradas
+        //dbh.removeAllCities();
 
 
+                //Atualiza o recycleview
+        att();
+
+
+
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        //limpar o recycleview de componentes duplicados
+        cityAdapter.clear();
+        //recyclerView
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        cityAdapter = new CityAdapter(this, cities);
+        recyclerView.setAdapter(cityAdapter);
+
+        //atualizar o recycleview
+        att();
+
+
+    }
+
+    public void add_city(CityModel obj){
+        DBHelper dbh = new DBHelper(this);
+        dbh.insertCity(obj);
+
+    }
+    public void rmv_city(CityModel obj){
+        DBHelper dbh = new DBHelper(this);
+        dbh.removeCity(obj);
+
+    }
+
+    public void att(){
         //Retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.openweathermap.org/data/2.5/")
@@ -105,46 +165,36 @@ public class MainActivity extends AppCompatActivity {
 
         WeatherService wservice = retrofit.create(WeatherService.class);
 
+        //Instância do banco
+        DBHelper dbh = new DBHelper(this);
 
-        //Chamada do retrofit para retornar os objetos
-        Call<CityModel> call = wservice.getCidadePeloNome("sdfsdf", "afeb3f38cdff7769f0f18c09357e5750","metric");
-        call.enqueue(new Callback<CityModel>() {
-            @Override
-            public void onResponse(Call<CityModel> call, Response<CityModel> response) {
-                CityModel city = response.body();
-                if(city != null){
-                    //o que fazer quando encontra a cidade
-                }else{
-                    // o que fazer quando NAO encontra a cidade
+        //Estrutura de repetição para listar as cidades cadastradas
+        for(int c=0;c<dbh.cityAll().size();c++) {
+            //Chamada do retrofit para retornar os objetos
+            List<CityModel> lscity = dbh.cityAll();
+            Call<CityModel> call = wservice.getCidadePeloNome(lscity.get(c).getName(), "afeb3f38cdff7769f0f18c09357e5750", "metric");
+            call.enqueue(new Callback<CityModel>() {
+                @Override
+                public void onResponse(Call<CityModel> call, Response<CityModel> response) {
+                    CityModel city = response.body();
+                    if (city != null) {
+                        //o que fazer quando encontra a cidade
+                        cities.add(city);
+                        System.out.println("Cidade encontrada");
+                    } else {
+                        // o que fazer quando NAO encontra a cidade
+                        System.out.println("Cidade não encontrada");
+                    }
+
                 }
 
-            }
+                @Override
+                public void onFailure(Call<CityModel> call, Throwable t) {
+                    Log.d("erro", "deu erro");
+                    //texto.setText("Algo de erraddo ocorreu desculpe");
 
-            @Override
-            public void onFailure(Call<CityModel> call, Throwable t) {
-                Log.d("erro", "deu erro");
-                //texto.setText("Algo de erraddo ocorreu desculpe");
-
-            }
-        });
-
-
-
-
-    }
-    public void add_city(CityModel obj){
-        DBHelper dbh = new DBHelper(this);
-        dbh.insertCity(obj);
-
-    }
-
-    public void att(){
-        DBHelper dbh = new DBHelper(this);
-        List<CityModel> lscity = dbh.cityAll(); // Retorna uma lista com todas as cidades cadastradas no banco
-        for(Iterator iterator = lscity.iterator(); iterator.hasNext();){
-            CityModel cidade = (CityModel) iterator.next();
-            Log.i("myapp db", cidade.toString()); // mostra apenas no log do navcat
-
+                }
+            });
         }
     }
 }
