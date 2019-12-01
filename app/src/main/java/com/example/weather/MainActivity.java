@@ -93,31 +93,29 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(cityAdapter);
 
 
-
-
-
-
-
-        //popular banco de dados com 5 cidades
-        /*
+        //popular banco de dados com 5 cidades se estiver vazio
         DBHelper dbh = new DBHelper(this);
-        CityModel city = new CityModel("Recife"); //criando uma cidade
-        CityModel city2 = new CityModel("Natal"); //criando uma cidade
-        CityModel city3 = new CityModel("Caruaru"); //criando uma cidade
-        CityModel city4 = new CityModel("Caracas"); //criando uma cidade
-        CityModel city5 = new CityModel("Brasilia"); //criando uma cidade
-        add_city(city);
-        add_city(city2);
-        add_city(city3);
-        add_city(city4);
-        add_city(city5);
-        */
+        if(dbh.cityAll().isEmpty()){
+            CityModel city = new CityModel("Recife"); //criando uma cidade
+            CityModel city2 = new CityModel("Natal"); //criando uma cidade
+            CityModel city3 = new CityModel("Caruaru"); //criando uma cidade
+            CityModel city4 = new CityModel("Caracas"); //criando uma cidade
+            CityModel city5 = new CityModel("Brasilia"); //criando uma cidade
+            add_city(city);
+            add_city(city2);
+            add_city(city3);
+            add_city(city4);
+            add_city(city5);
+        }
+
+
+
+
 
         //Método para remover todas as cidades cadastradas
         //dbh.removeAllCities();
 
-
-                //Atualiza o recycleview
+        //Atualiza o recycleview
         att();
 
 
