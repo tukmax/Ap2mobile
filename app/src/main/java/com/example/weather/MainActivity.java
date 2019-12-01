@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     if (city != null) {
                         //o que fazer quando encontra a cidade
                         cities.add(city);
+                        cityAdapter.notifyDataSetChanged();
                         System.out.println("Cidade encontrada");
                     } else {
                         // o que fazer quando NAO encontra a cidade
